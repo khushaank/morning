@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#14100C">
+<title>Dismissed.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,380;0,480;0,600;1,380&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-a:#14100C;
+    --bg-b:#1B140F;
+    --ink:#EDE6D8;
+    --muted:#8C8270;
+    --rule:#332B22;
+    --stamp:#A23B2C;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{height:100%;}
+
+  body{
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:radial-gradient(120% 100% at 50% 0%, var(--bg-b) 0%, var(--bg-a) 70%);
+    color:var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    padding:32px 22px;
+    overflow:hidden;
+  }
+
+  main{
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    animation:rise 0.7s ease-out both;
+  }
+
+  @keyframes rise{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .case-no{
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:30px;
+  }
+
+  .time{
+    font-family:'Fraunces', serif;
+    font-weight:480;
+    font-size:clamp(58px, 18vw, 100px);
+    line-height:0.95;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+
+  .date{
+    margin-top:10px;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  .divider{
+    width:26px;
+    height:1px;
+    background:var(--rule);
+    margin:30px auto;
+  }
+
+  .field{
+    margin-bottom:26px;
+  }
+
+  .label{
+    display:block;
+    font-size:10px;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:10px;
+  }
+
+  .stamp{
+    display:inline-block;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(26px, 6.5vw, 36px);
+    letter-spacing:0.02em;
+    text-transform:uppercase;
+    color:var(--stamp);
+    border:2px solid var(--stamp);
+    padding:4px 16px 6px;
+    transform:rotate(-2.5deg);
+    opacity:0;
+    animation:stamp 0.45s cubic-bezier(.2,1.4,.4,1) 0.5s both;
+  }
+
+  @keyframes stamp{
+    0%{opacity:0; transform:rotate(-12deg) scale(1.7);}
+    100%{opacity:1; transform:rotate(-2.5deg) scale(1);}
+  }
+
+  .ruling{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:380;
+    font-size:clamp(17px, 3.3vw, 20px);
+    line-height:1.55;
+    color:var(--ink);
+    opacity:0.92;
+    max-width:360px;
+    margin:0 auto;
+  }
+
+  footer{
+    margin-top:38px;
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--muted);
+    opacity:0.65;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    main, .stamp{animation:none; opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="case-no" id="caseNo">NO. —</div>
+
+  <div class="time" id="time">--:--</div>
+  <div class="date" id="date">—</div>
+
+  <div class="divider"></div>
+
+  <div class="field">
+    <span class="label">Status</span>
+    <span class="stamp">Dismissed.</span>
+  </div>
+
+  <div class="field">
+    <span class="label">Ruling</span>
+    <p class="ruling" id="ruling">—</p>
+  </div>
+
+  <footer>Filed automatically upon waking.</footer>
+</main>
+
+<script>
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  const rulings = [
+    "You're up. That's the only verdict that matters right now.",
+    "Confidence is just discipline nobody was around to witness.",
+    "No snooze. No negotiation. Just motion.",
+    "The day hasn't ruled on you yet. Go set the terms.",
+    "Competence doesn't check how you feel before it shows up.",
+    "You moved before you felt ready. That's the entire job.",
+    "Somewhere, someone's still negotiating with their pillow. Not you.",
+    "Showing up is the one credential nobody can fake.",
+    "The day rewards whoever filed first.",
+    "You don't need permission to take this seriously.",
+    "Every rep before sunrise compounds where no one's counting.",
+    "Comfort lost this round. You're still standing.",
+    "This is what self-respect looks like at this hour.",
+    "No audience. No applause. Doesn't change the verdict."
+  ];
+
+  function pad(n){ return n.toString().padStart(2,'0'); }
+
+  function dayOfYear(d){
+    const start = new Date(d.getFullYear(), 0, 0);
+    return Math.floor((d - start) / 86400000);
+  }
+
+  function render(){
+    const now = new Date();
+
+    document.getElementById('time').textContent =
+      pad(now.getHours()) + ':' + pad(now.getMinutes());
+
+    document.getElementById('date').textContent =
+      dayNames[now.getDay()] + ' · ' + monthNames[now.getMonth()] + ' ' + now.getDate();
+
+    const yy = String(now.getFullYear()).slice(-2);
+    const mm = pad(now.getMonth() + 1);
+    const dd = pad(now.getDate());
+    document.getElementById('caseNo').textContent = 'NO. ' + yy + '-' + mm + dd;
+
+    const idx = dayOfYear(now) % rulings.length;
+    document.getElementById('ruling').textContent = rulings[idx];
+  }
+
+  render();
+  setInterval(render, 1000);
+</script>
+</body>
+</html>
