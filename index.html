@@ -1,212 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#14100C">
-<title>Dismissed.</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Why Are You Scanning This?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,380;0,480;0,600;1,380&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-a:#14100C;
-    --bg-b:#1B140F;
-    --ink:#EDE6D8;
-    --muted:#8C8270;
-    --rule:#332B22;
-    --stamp:#A23B2C;
+    --ink: #161512;
+    --paper: #FBF9F4;
+    --yellow: #F2B705;
+    --red: #C1392B;
+    --muted: #5B5A54;
   }
 
-  *{margin:0;padding:0;box-sizing:border-box;}
-
-  html,body{height:100%;}
+  *{ box-sizing: border-box; }
 
   body{
-    min-height:100vh;
-    min-height:100dvh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:radial-gradient(120% 100% at 50% 0%, var(--bg-b) 0%, var(--bg-a) 70%);
-    color:var(--ink);
-    font-family:'IBM Plex Mono', monospace;
-    padding:32px 22px;
-    overflow:hidden;
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hazard{
+    height: 18px;
+    width: 100%;
+    background: repeating-linear-gradient(
+      135deg,
+      var(--yellow) 0px, var(--yellow) 22px,
+      var(--ink) 22px, var(--ink) 44px
+    );
   }
 
   main{
-    width:100%;
-    max-width:420px;
-    text-align:center;
-    animation:rise 0.7s ease-out both;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 28px 40px;
+    text-align: center;
   }
 
-  @keyframes rise{
-    from{opacity:0; transform:translateY(10px);}
-    to{opacity:1; transform:translateY(0);}
+  .eyebrow{
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    font-size: 0.78rem;
+    color: var(--red);
+    margin: 0 0 18px;
   }
 
-  .case-no{
-    font-size:11px;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:30px;
+  h1{
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: clamp(2.1rem, 8vw, 3.6rem);
+    line-height: 1.08;
+    margin: 0 0 30px;
+    letter-spacing: 0.01em;
   }
 
-  .time{
-    font-family:'Fraunces', serif;
-    font-weight:480;
-    font-size:clamp(58px, 18vw, 100px);
-    line-height:0.95;
-    letter-spacing:-0.01em;
-    color:var(--ink);
+  .stamp-line{
+    display: inline-block;
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(2.4rem, 9vw, 4.2rem);
+    text-transform: uppercase;
+    color: var(--red);
+    border: 6px solid var(--red);
+    padding: 6px 26px;
+    transform: rotate(-3deg);
+    margin: 0 0 34px;
   }
 
-  .date{
-    margin-top:10px;
-    font-size:11px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--muted);
+  .sub{
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 8px;
+    line-height: 1.55;
   }
 
-  .divider{
-    width:26px;
-    height:1px;
-    background:var(--rule);
-    margin:30px auto;
+  .notes{
+    max-width: 920px;
+    margin: 56px auto 0;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 22px;
   }
 
-  .field{
-    margin-bottom:26px;
+  .note{
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-top: 5px solid var(--yellow);
+    padding: 18px 18px 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    transform: rotate(var(--r, 0deg));
   }
 
-  .label{
-    display:block;
-    font-size:10px;
-    letter-spacing:0.24em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:10px;
-  }
-
-  .stamp{
-    display:inline-block;
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:clamp(26px, 6.5vw, 36px);
-    letter-spacing:0.02em;
-    text-transform:uppercase;
-    color:var(--stamp);
-    border:2px solid var(--stamp);
-    padding:4px 16px 6px;
-    transform:rotate(-2.5deg);
-    opacity:0;
-    animation:stamp 0.45s cubic-bezier(.2,1.4,.4,1) 0.5s both;
-  }
-
-  @keyframes stamp{
-    0%{opacity:0; transform:rotate(-12deg) scale(1.7);}
-    100%{opacity:1; transform:rotate(-2.5deg) scale(1);}
-  }
-
-  .ruling{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:380;
-    font-size:clamp(17px, 3.3vw, 20px);
-    line-height:1.55;
-    color:var(--ink);
-    opacity:0.92;
-    max-width:360px;
-    margin:0 auto;
-  }
+  .note:nth-of-type(1){ --r: -1.5deg; }
+  .note:nth-of-type(2){ --r: 1deg; }
+  .note:nth-of-type(3){ --r: -0.7deg; }
+  .note:nth-of-type(4){ --r: 1.6deg; }
+  .note:nth-of-type(5){ --r: -1deg; }
 
   footer{
-    margin-top:38px;
-    font-size:10px;
-    letter-spacing:0.1em;
-    color:var(--muted);
-    opacity:0.65;
+    max-width: 760px;
+    margin: 64px auto 0;
+    padding: 0 28px 56px;
+    text-align: center;
   }
 
-  @media (prefers-reduced-motion: reduce){
-    main, .stamp{animation:none; opacity:1; transform:none;}
+  footer p{
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  footer strong{
+    color: var(--ink);
   }
 </style>
 </head>
 <body>
+
+<div class="hazard"></div>
+
 <main>
-  <div class="case-no" id="caseNo">NO. —</div>
-
-  <div class="time" id="time">--:--</div>
-  <div class="date" id="date">—</div>
-
-  <div class="divider"></div>
-
-  <div class="field">
-    <span class="label">Status</span>
-    <span class="stamp">Dismissed.</span>
-  </div>
-
-  <div class="field">
-    <span class="label">Ruling</span>
-    <p class="ruling" id="ruling">—</p>
-  </div>
-
-  <footer>Filed automatically upon waking.</footer>
+  <p class="eyebrow">A NOTICE, FOR YOU SPECIFICALLY</p>
+  <h1>Why are you scanning this?</h1>
+  <div class="stamp-line">Go to work.</div>
+  <p class="sub">Whatever this QR code is promising — a discount, a prize, a survey, a "verification" — it is not your job. Your job is somewhere else. Go do that instead.</p>
 </main>
 
-<script>
-  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+<section class="notes">
+  <div class="note">It's not a coupon. Go to work.</div>
+  <div class="note">Whatever you think you're getting, you're not. Go to work.</div>
+  <div class="note">Put the phone down. Go to work.</div>
+  <div class="note">No, it's not urgent. Go to work.</div>
+  <div class="note">Don't scan random QR codes. It's bad. Final answer.</div>
+</section>
 
-  const rulings = [
-    "You're up. That's the only verdict that matters right now.",
-    "Confidence is just discipline nobody was around to witness.",
-    "No snooze. No negotiation. Just motion.",
-    "The day hasn't ruled on you yet. Go set the terms.",
-    "Competence doesn't check how you feel before it shows up.",
-    "You moved before you felt ready. That's the entire job.",
-    "Somewhere, someone's still negotiating with their pillow. Not you.",
-    "Showing up is the one credential nobody can fake.",
-    "The day rewards whoever filed first.",
-    "You don't need permission to take this seriously.",
-    "Every rep before sunrise compounds where no one's counting.",
-    "Comfort lost this round. You're still standing.",
-    "This is what self-respect looks like at this hour.",
-    "No audience. No applause. Doesn't change the verdict."
-  ];
+<footer>
+  <p><strong>Don't scan random QR codes.</strong> It's bad. You already knew that.</p>
+</footer>
 
-  function pad(n){ return n.toString().padStart(2,'0'); }
+<div class="hazard"></div>
 
-  function dayOfYear(d){
-    const start = new Date(d.getFullYear(), 0, 0);
-    return Math.floor((d - start) / 86400000);
-  }
-
-  function render(){
-    const now = new Date();
-
-    document.getElementById('time').textContent =
-      pad(now.getHours()) + ':' + pad(now.getMinutes());
-
-    document.getElementById('date').textContent =
-      dayNames[now.getDay()] + ' · ' + monthNames[now.getMonth()] + ' ' + now.getDate();
-
-    const yy = String(now.getFullYear()).slice(-2);
-    const mm = pad(now.getMonth() + 1);
-    const dd = pad(now.getDate());
-    document.getElementById('caseNo').textContent = 'NO. ' + yy + '-' + mm + dd;
-
-    const idx = dayOfYear(now) % rulings.length;
-    document.getElementById('ruling').textContent = rulings[idx];
-  }
-
-  render();
-  setInterval(render, 1000);
-</script>
 </body>
 </html>
